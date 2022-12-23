@@ -1,0 +1,11 @@
+{
+    "name": "wildledersessel/fbmbook",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Wildledersessel\\Fbmbook\\": "src/"
+        }
+    },
+    "require": {}
+}
