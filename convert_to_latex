@@ -1,0 +1,34 @@
+#!/usr/bin/env php
+<?php
+
+// How to use: cat data/message_1.json | ./convert_to_latex > data/content.tex 
+
+
+$data = json_decode(stream_get_contents(fopen('php://stdin', 'r')), true);
+
+$currentYear = 0;
+
+$data['messages'] = array_reverse($data['messages']);
+
+foreach ($data['messages'] as $msg) {
+	if (!isset($msg['content'])) {
+		continue;
+	}
+
+	$sender = utf8_decode($msg['sender_name']);
+	$content = str_replace(['%', '^', '{', '}', '#', '$', '_', '&'], ['\%', '\^{}', '\{', '\}', '\#', '\$', '\_{}', '\&'], utf8_decode($msg['content']));
+	$date = new DateTimeImmutable("@" . ($msg['timestamp_ms']/1000));
+
+	$year = $date->format('Y');
+	if ($currentYear !== $year) {
+		echo '\newyear{', $year, '}', PHP_EOL;
+		$currentYear = $year;
+	}
+       
+	echo "\\fbmessage{", PHP_EOL;
+	echo "\datetime{", $date->format('d.m.Y H:i'), "}", PHP_EOL;
+	echo "\sender{", $sender, "}", PHP_EOL;
+	echo "\content{", $content, "}", PHP_EOL;
+	echo "}", PHP_EOL;
+	echo PHP_EOL;
+}
