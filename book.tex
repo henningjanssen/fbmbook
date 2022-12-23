@@ -1,0 +1,40 @@
+\documentclass[a4paper]{book}
+
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{fontspec}
+\usepackage{titlesec}
+\usepackage[a4paper]{geometry}
+\usepackage[most]{tcolorbox}
+\titleformat{\chapter}{\Large\bfseries}{}{0em}{}
+
+\def \thesender {}
+\def \thecontent {}
+\def \thedatetime {}
+
+\newcommand{\fbmessage}[1]{%
+	#1
+
+	\begin{tcolorbox}[title={\thesender\hfill\thedatetime},colframe=blue!25!black]
+	\thecontent
+	\end{tcolorbox}
+}
+
+
+\newcommand{\datetime}[1]{\def \thedatetime{#1}}
+\newcommand{\sender}[1]{\def \thesender{#1}}
+\newcommand{\content}[1]{\def \thecontent{#1}}
+
+\newcommand{\newyear}[1]{\chapter{#1}}
+
+\begin{document}
+\title{Krosse Krabbe Memoiren}
+\author{Krosse Krabbe}
+\date{23. Dezember 2022}
+
+\maketitle
+\tableofcontents
+
+\include{data/content.tex}
+
+\end{document}
