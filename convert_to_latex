@@ -19,7 +19,7 @@ foreach ($data['messages'] as $msg) {
 	}
 
 	$sender = utf8_decode($msg['sender_name']);
-	$content = str_replace(['{', '}', '%', '^', '#', '$', '_', '&'], ['\{', '\}', '\%', '\^{}', '\#', '\$', '\_{}', '\&'], utf8_decode($msg['content']));
+	$content = str_replace(['\\', '{', '}', '%', '^', '#', '$', '_', '&'], ['\\\\', '\{', '\}', '\%', '\^{}', '\#', '\$', '\_{}', '\&'], utf8_decode($msg['content']));
 	$date = new DateTimeImmutable("@" . ($msg['timestamp_ms']/1000));
 
 	$year = $date->format('Y');
