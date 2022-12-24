@@ -8,10 +8,20 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Wildledersessel\Fbmbook\Preprocessing\Preprocessor;
 
-#[AsCommand('preprocess', 'Generates the database and sort data')]
+#[AsCommand(
+    name: 'preprocess',
+    description: 'Generates the database and sort data'
+)]
 class PreprocessCommand extends Command
 {
+    public function __construct(
+        private readonly Preprocessor $preprocessor,
+    )
+    {
+        parent::__construct();
+    }
     protected function configure()
     {
         $this
@@ -21,7 +31,7 @@ class PreprocessCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln("Hi");
+        $this->preprocessor->execute($input->getArgument('inpath'));
 
         return self::SUCCESS;
     }
