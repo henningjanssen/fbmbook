@@ -2,6 +2,7 @@
 <?php
 
 // How to use: cat data/message_1.json | ./convert_to_latex > data/content.tex 
+// All files: rm data/content.tex && ls data/message_*.json | xargs -I'{}' sh -c 'cat {} | ./convert_to_latex >> data/content.tex'
 
 
 $data = json_decode(stream_get_contents(fopen('php://stdin', 'r')), true);
