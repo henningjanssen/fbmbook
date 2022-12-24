@@ -1,13 +1,17 @@
 #!/usr/bin/env php
 <?php
 
-require __DIR__.'/../vendor/autoload.php';
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Wildledersessel\Fbmbook\Application;
 
-use Symfony\Component\Console\Application;
-use Wildledersessel\Fbmbook\Command\PreprocessCommand;
+require_once dirname(__DIR__).'/vendor/autoload.php';
 
-$application = new Application();
+$container = new ContainerBuilder();
+$loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../config'));
+$loader->load('services.yml');
+$container->compile();
 
-$application->add(new PreprocessCommand());
-
-$application->run();
+$app = $container->get(Application::class);
+$app->run();

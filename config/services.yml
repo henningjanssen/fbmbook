@@ -1,0 +1,20 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+    
+    _instanceof:
+        Symfony\Component\Console\Command\Command:
+            tags: ['command']
+
+    Wildledersessel\Fbmbook\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    Wildledersessel\Fbmbook\Application:
+        public: true
+        arguments:
+            - !tagged command
