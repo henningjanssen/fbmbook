@@ -7,5 +7,7 @@
             "Wildledersessel\\Fbmbook\\": "src/"
         }
     },
-    "require": {}
+    "require": {
+        "symfony/console": "^6.2"
+    }
 }
