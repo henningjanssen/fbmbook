@@ -33,17 +33,25 @@ final class FbMessengerGDPRParser implements InputParserInterface
             throw new \Exception('I');
         }
 
+        $chatTitle = "<unknown>";
+        $participants = [];
         foreach ($finder as $file) {
             $fileContent = $file->getContents();
             $data = json_decode($fileContent, true, flags: JSON_OBJECT_AS_ARRAY | JSON_THROW_ON_ERROR);
             
             $participants = [];
+            $chatTitle = $data['title'];
             foreach ($data['participants'] as $p) {
-                $participants[] = $p['name'];
+                if (!in_array($p['name'], $participants)) {
+                    $participants[] = $p['name'];
+                }
             }
-            yield new ChatInfo($data['title'], $participants);
 
             foreach ($data['messages'] as $msg) {
+                if (!in_array($msg['sender_name'], $participants)) {
+                    $participants[] = $msg['sender_name'];
+                }
+
                 // is it a deleted message?
                 if (isset($msg['is_unsent'])) {
                     yield new DeletedMessage(
@@ -98,6 +106,11 @@ final class FbMessengerGDPRParser implements InputParserInterface
                 );
             }
         }
+
+        yield new ChatInfo(
+            $chatTitle,
+            $participants,
+        );
     }
 
     /**

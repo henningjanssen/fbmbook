@@ -26,9 +26,6 @@ class Processor implements ProcessorInterface
         foreach ($this->partProcessors as $p) {
             if ($p->supports($msg)) {
                 try {
-                    if($msg instanceof ChatMessage) {
-                        var_dump($msg->message ?? '<nomsg>');
-                    }
                     $p->process($msg);
                 } catch (UnsupportedMediaException) {
                     // TODO: None implemented yet
