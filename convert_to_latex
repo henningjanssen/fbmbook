@@ -42,7 +42,7 @@ foreach ($data['messages'] as $msg) {
 		$currentDay = $day;
 	}
        
-	$content = preg_replace('/([^-\p{L}\x00-\x7F]+)/u', '{\\fontspec{Symbola.ttf}\1}', $content);
+	$content = preg_replace('/([^\p{L}\p{P}\x00-\x7F]+)/u', '\\emoji{\1}', $content);
 	echo "\\fbmessage{", PHP_EOL;
 	echo "\datetime{", $date->format('d.m.Y H:i'), "}", PHP_EOL;
 	echo "\sender{", $sender, "}", PHP_EOL;
