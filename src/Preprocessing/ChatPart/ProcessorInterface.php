@@ -1,0 +1,9 @@
+<?php
+declare(strict_types=1);
+
+namespace Wildledersessel\Fbmbook\Preprocessing\ChatPart;
+
+interface ProcessorInterface
+{
+    public function process(ChatPartInterface $msg): void;
+}

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Wildledersessel\Fbmbook\Preprocessing\ChatPart;
 
-class ChatInfo implements ChatPartInterface
+final class ChatInfo implements ChatPartInterface
 {
     /**
      * @param string[] $participants

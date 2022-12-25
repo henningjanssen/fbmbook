@@ -3,15 +3,20 @@ declare(strict_types=1);
 
 namespace Wildledersessel\Fbmbook\Preprocessing;
 
+use Wildledersessel\Fbmbook\Preprocessing\ChatPart\ProcessorInterface;
+
 final class Preprocessor
 {
     public function __construct(
-        private readonly InputParserInterface $inputParser
+        private readonly InputParserInterface $inputParser,
+        private readonly ProcessorInterface $partProcessor,
     ) {}
 
     public function execute(string $srcDir): void
     {
-        $this->inputParser->iterate($srcDir);
+        foreach ($this->inputParser->iterate($srcDir) as $msg) {
+            $this->partProcessor->process($msg);
+        }
     }
 
     public function __invoke(string $srcDir): void

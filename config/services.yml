@@ -6,6 +6,10 @@ services:
     _instanceof:
         Symfony\Component\Console\Command\Command:
             tags: ['command']
+        Wildledersessel\Fbmbook\Preprocessing\ChatPart\Media\MediaTypeProcessorInterface:
+            tags: ['preprocess.mediatype']
+        Wildledersessel\Fbmbook\Preprocessing\ChatPart\ChatPartProcessorInterface:
+            tags: ['preprocess.chattype']
 
     Wildledersessel\Fbmbook\:
         resource: '../src/'
@@ -18,3 +22,13 @@ services:
         public: true
         arguments:
             - !tagged command
+
+    Wildledersessel\Fbmbook\Preprocessing\ChatPart\Media\DelegatingMediaProcessor:
+        public: true
+        arguments:
+            - !tagged preprocess.mediatype
+
+    Wildledersessel\Fbmbook\Preprocessing\ChatPart\Processor:
+        public: true
+        arguments:
+            - !tagged preprocess.chattype

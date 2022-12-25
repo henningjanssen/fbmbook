@@ -6,7 +6,7 @@ namespace Wildledersessel\Fbmbook\Preprocessing;
 interface InputParserInterface
 {
     /**
-     * @return iterable<ChatParts\ChatPartInterface>
+     * @return iterable<ChatPart\ChatPartInterface>
      */
     public function iterate(string $srcDir): iterable;
 }
