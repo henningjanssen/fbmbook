@@ -3,15 +3,11 @@
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Wildledersessel\Fbmbook\Application;
 
-require_once dirname(__DIR__).'/vendor/autoload.php';
-
-$container = new ContainerBuilder();
-$loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../config'));
-$loader->load('services.yml');
-$container->compile();
+$container = require_once __DIR__ . '/../config/bootstrap.php';
 
 $app = $container->get(Application::class);
 $app->run();

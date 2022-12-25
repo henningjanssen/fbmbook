@@ -3,12 +3,14 @@ declare(strict_types=1);
 
 namespace Wildledersessel\Fbmbook\Preprocessing\ChatPart;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Wildledersessel\Fbmbook\Preprocessing\ChatPart\Media\MediaProcessorInterface;
 
 class ChatMessageProcessor implements ChatPartProcessorInterface
 {
     public function __construct(
-        protected readonly MediaProcessorInterface $mediaProcessor
+        protected readonly MediaProcessorInterface $mediaProcessor,
+        protected readonly EntityManagerInterface $entityManager,
     ) {}
 
     public function process(ChatPartInterface $msg): void
