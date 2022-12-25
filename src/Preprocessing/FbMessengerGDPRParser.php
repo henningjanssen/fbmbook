@@ -96,10 +96,14 @@ final class FbMessengerGDPRParser implements InputParserInterface
                     );
                 }
 
+                $content = $msg['content'] ?? null;
+                if (null !== $content) {
+                    $content = utf8_decode($content);
+                }
                 yield new ChatMessage(
-                    $msg['sender_name'],
+                    utf8_decode($msg['sender_name']),
                     $msg['timestamp_ms'],
-                    $msg['content'] ?? null,
+                    $content,
                     $media,
                     $reactions,
                     isset($msg['share']) ? [$msg['share']['link']] : [],

@@ -18,4 +18,9 @@ class DoctrineChatMessageRepository implements ChatMessageRepositoryInterface
         $this->entityManager->persist($message);
         $this->entityManager->flush();
     }
+
+    public function findAll(): array
+    {
+        return $this->entityManager->getRepository(ChatMessage::class)->findAll();
+    }
 }
