@@ -15,19 +15,19 @@ def query(sql, params=[]):
 def draw():
     users = query("SELECT DISTINCT(author) FROM chat_message")
     users = list(map(lambda x: x[0], users))
+    dates = query("SELECT DISTINCT(strftime('%Y-%m', m.datetime)) FROM chat_message m ORDER BY m.datetime")
 
-    fig, ax = plt.subplots(len(users), figsize=[5,20])
+    fig, ax = plt.subplots(len(users), figsize=[10,40])
     for i in range(len(users)):
         user = users[i]
-        all = query("SELECT strftime('%Y-%m', m.datetime), COUNT(*) FROM chat_message m WHERE m.author=:user GROUP BY strftime('%Y-%m', m.datetime);", {"user": user})
-        ax[i].bar(list(map(lambda x: x[0], all)), list(map(lambda x: x[1], all)))
+        all = dict(query("SELECT strftime('%Y-%m', m.datetime), COUNT(*) FROM chat_message m WHERE m.author=:user GROUP BY strftime('%Y-%m', m.datetime);", {"user": user}))
+        ax[i].fill_between(list(map(lambda x: x[0], dates)), np.zeros(len(dates)), list(map(lambda x: all.get(x[0]) or 0, dates)), alpha=0.5)
 
-        ax[i].set(xticks=[1])
-        #ax[i].set_axis_off()
+        ax[i].set(xticks=[1, len(dates)/2, len(dates)])
         ax[i].set_title(user)
 
     plt.tight_layout()
-    plt.axis('off')
+    #plt.axis('off')
     plt.suptitle("Nachrichtenanzahl")
     plt.savefig("trends.png")
 
