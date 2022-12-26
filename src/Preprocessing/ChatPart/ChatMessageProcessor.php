@@ -19,7 +19,7 @@ class ChatMessageProcessor implements ChatPartProcessorInterface
         assert($msg instanceof ChatMessage);
         // TODO: db stuff
 
-        $this->entityManager->save(new Entity\ChatMessage($msg->author, $msg->message ?? "no content", (new \DateTimeImmutable())->setTimestamp($msg->timestamp)));
+        $this->entityManager->save(new Entity\ChatMessage($msg->author, $msg->message ?? "no content", (new \DateTimeImmutable())->setTimestamp((int) ($msg->timestampInMs/1000))));
 
         foreach($msg->media as $m) {
             $this->mediaProcessor->process($m);
