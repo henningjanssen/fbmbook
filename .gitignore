@@ -16,3 +16,8 @@ book.pdf
 .*.lb
 *.xdv
 *.fdb_latexmk
+raw/
+data/
+composer.sh
+
+/vendor/
