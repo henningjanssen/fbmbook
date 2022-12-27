@@ -17,13 +17,13 @@ def draw():
     users = list(map(lambda x: x[0], users))
     dates = query("SELECT DISTINCT(strftime('%Y-%m', m.datetime)) FROM chat_message m ORDER BY m.datetime")
 
-    fig, ax = plt.subplots(len(users), figsize=[10,40])
+    fig, ax = plt.subplots(len(users), figsize=[20,10])
     for i in range(len(users)):
         user = users[i]
         all = dict(query("SELECT strftime('%Y-%m', m.datetime), COUNT(*) FROM chat_message m WHERE m.author=:user GROUP BY strftime('%Y-%m', m.datetime);", {"user": user}))
         ax[i].fill_between(list(map(lambda x: x[0], dates)), np.zeros(len(dates)), list(map(lambda x: all.get(x[0]) or 0, dates)), alpha=0.5)
 
-        ax[i].set(xticks=[1, len(dates)/2, len(dates)])
+        ax[i].set(xticks=np.arange(len(all), step=6))
         ax[i].set_title(user)
 
     plt.tight_layout()
