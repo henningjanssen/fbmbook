@@ -1,0 +1,62 @@
+\documentclass[a4paper,twocolumn]{book}
+
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{fontspec}
+\usepackage{titlesec}
+\usepackage[export]{adjustbox}
+\usepackage[a4paper,inner=1cm,outer=2cm]{geometry}
+\usepackage[most]{tcolorbox}
+
+\setmainfont{Arial}
+
+\titleformat{\chapter}{\Large\bfseries}{}{0em}{}
+
+\setlength{\parindent}{0cm}
+
+\def \thesender {}
+\def \thecontent {}
+\def \thedatetime {}
+\def \theyear {}
+\def \themonth {}
+\def \theday {}
+
+\newcommand{\fbmessage}[1]{%
+	#1
+
+	\begin{tcolorbox}[title={\thesender\hfill\thedatetime},colframe=blue!25!black]
+	\thecontent
+	\end{tcolorbox}
+}
+
+\renewcommand{\fbmessage}[1]{%
+	#1
+
+	\begin{minipage}{8cm}
+		\MakeUppercase{\thesender} \phantom{.}\\ 
+		\thecontent
+	\end{minipage}
+	\vspace{2ex}
+}
+
+\newcommand{\datetime}[1]{\def \thedatetime{#1}}
+\newcommand{\sender}[1]{\def \thesender{#1}}
+\newcommand{\content}[1]{\def \thecontent{#1}}
+
+\newcommand{\newyear}[1]{\def \theyear{#1}\chapter{#1}}
+\newcommand{\newmonth}[1]{\def \themonth{#1}\section{#1}}
+\newcommand{\newday}[1]{\def \theday{#1} {\Large\theday.\themonth.\theyear}\vspace{1ex}\hrule\vspace{2ex}}
+
+\newcommand{\emoji}[1]{{\setmainfont{Noto Color Emoji}[Renderer=Harfbuzz]#1}}
+
+\begin{document}
+\title{Krosse Krabbe Memoiren}
+\author{Krosse Krabbe}
+\date{31. Dezember 2022}
+
+\maketitle
+\tableofcontents
+
+\include{data/content.tex}
+
+\end{document}

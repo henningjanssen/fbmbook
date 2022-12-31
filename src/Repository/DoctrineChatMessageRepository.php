@@ -13,14 +13,25 @@ class DoctrineChatMessageRepository implements ChatMessageRepositoryInterface
     ) {
     }
 
-    public function save(ChatMessage $message): void
+    public function save(ChatMessage $message, bool $flush = true): void
     {
         $this->entityManager->persist($message);
-        $this->entityManager->flush();
+
+        if ($flush) {
+            $this->entityManager->flush();
+        }
     }
 
     public function findAll(): array
     {
-        return $this->entityManager->getRepository(ChatMessage::class)->findAll();
+        $repository = $this->entityManager->getRepository(ChatMessage::class);
+        $qb = $repository->createQueryBuilder('m');
+
+        $qb
+            ->orderBy('m.dateTime', 'ASC')
+        ;
+
+
+        return $qb->getQuery()->getResult();
     }
 }
