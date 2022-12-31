@@ -24,6 +24,14 @@ class DoctrineChatMessageRepository implements ChatMessageRepositoryInterface
 
     public function findAll(): array
     {
-        return $this->entityManager->getRepository(ChatMessage::class)->findAll();
+        $repository = $this->entityManager->getRepository(ChatMessage::class);
+        $qb = $repository->createQueryBuilder('m');
+
+        $qb
+            ->orderBy('m.dateTime', 'ASC')
+        ;
+
+
+        return $qb->getQuery()->getResult();
     }
 }
